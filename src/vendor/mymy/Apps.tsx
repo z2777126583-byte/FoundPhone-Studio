@@ -330,6 +330,15 @@ export function MymyInstagram(p: SkinProps) {
     stories = p.items.filter((i) => i.meta.story === "true"),
     dms = p.items.filter((i) => i.folder === "私信"),
     active = stories[story - 1];
+  const openedNotification = useRef("");
+  useEffect(() => {
+    if (!p.initialItemId || openedNotification.current === p.initialItemId) return;
+    const item = posts.find((post) => post.id === p.initialItemId);
+    if (!item) return;
+    openedNotification.current = p.initialItemId;
+    setSelected(item);
+    if (!p.creator) read(p, item);
+  }, [p.initialItemId, p.items, p.creator, p.onRead]);
   const toggle = (id: string, values: string[], set: (v: string[]) => void) =>
     set(values.includes(id) ? values.filter((v) => v !== id) : [...values, id]);
   useEffect(() => {
@@ -789,3 +798,4 @@ export function MymyX(p: SkinProps) {
     </div>
   );
 }
+

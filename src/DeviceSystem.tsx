@@ -62,6 +62,8 @@ export function DeviceLock({
   work,
   time,
   notices,
+  instagramItems = [],
+  onNoticeOpen,
   onDismiss,
   pinOpen,
   setPinOpen,
@@ -73,6 +75,8 @@ export function DeviceLock({
   work: Work;
   time: string;
   notices: string[];
+  instagramItems?: import("./schema").Item[];
+  onNoticeOpen: (appId: string, itemId?: string) => void;
   onDismiss: (index: number) => void;
   pinOpen: boolean;
   setPinOpen: (v: boolean) => void;
@@ -130,7 +134,8 @@ export function DeviceLock({
                 compact
                 notices={notices}
                 apps={work.apps}
-                onOpen={open}
+                instagramItems={instagramItems}
+                onOpen={onNoticeOpen}
                 onDismiss={onDismiss}
               />
             )}
@@ -482,3 +487,4 @@ export function DeviceKeyboard({ close }: { close: () => void }) {
   );
 }
 export { NativeSettings } from "./ios/Settings";
+

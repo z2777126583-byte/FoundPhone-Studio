@@ -133,6 +133,7 @@ function PhoneRuntime({
   onRuntime?: (s: Runtime) => void;
 }) {
   const [app, setApp] = useState("");
+  const [notificationItemId, setNotificationItemId] = useState("");
   const [homeRequest, setHomeRequest] = useState(0);
   const [locked, setLocked] = useState(!creator);
   const [pinOpen, setPinOpen] = useState(false);
@@ -265,8 +266,9 @@ function PhoneRuntime({
     for (const id of appSnapshots.current.keys())
       if (!recent.includes(id) && id !== app) appSnapshots.current.delete(id);
   };
-  const open = (id: string) => {
+  const open = (id: string, itemId?: string) => {
     if (!work.apps.some((a) => a.id === id && a.installed)) return;
+    setNotificationItemId(itemId ?? "");
     setApp(id);
     setKeyboard(false);
     setRecent((v) => [id, ...v.filter((a) => a !== id)].slice(0, 8));
@@ -434,6 +436,11 @@ function PhoneRuntime({
                 }
                 time={displayTime}
                 notices={s.notifications}
+                instagramItems={work.data.instagram ?? []}
+                onNoticeOpen={(appId, itemId) => {
+                  open(appId, itemId);
+                  beginUnlock();
+                }}
                 onDismiss={dismissNotice}
                 pinOpen={pinOpen}
                 setPinOpen={setPinOpen}
@@ -468,6 +475,7 @@ function PhoneRuntime({
                   onAdd={() => onAdd?.(app)}
                   onBack={() => setApp("")}
                   onSettings={onSettings}
+                  initialItemId={notificationItemId}
                   onUi={(key, value) => {
                     const current = runtimeRef.current;
                     update(
@@ -566,11 +574,11 @@ function PhoneRuntime({
                     <SystemNotifications
                       notices={s.notifications}
                       apps={work.apps}
-                      onOpen={() => {
+                      instagramItems={work.data.instagram ?? []}
+                      onOpen={(appId, itemId) => {
                         setPanel("");
                         if (locked) beginUnlock();
-                        else if (installedApps.some((a) => a.id === "messages"))
-                          open("messages");
+                        else open(appId, itemId);
                       }}
                       onDismiss={dismissNotice}
                     />
@@ -694,7 +702,12 @@ function PhoneRuntime({
               className="device-banner"
               onClick={() => {
                 setBanner("");
-                setPanel("notification");
+                const target = notificationContent(
+                  banner,
+                  work.apps,
+                  work.data.instagram ?? [],
+                );
+                open(target.appId, target.itemId);
               }}
             >
               <AppIcon
@@ -878,6 +891,7 @@ function AppContent({
   onSettings,
   onUi,
   work,
+  initialItemId,
 }: {
   app: AppPlugin;
   name: string;
@@ -891,6 +905,7 @@ function AppContent({
   onSettings?: () => void;
   onUi?: (key: string, value: UiValue) => void;
   work: Work;
+  initialItemId?: string;
 }) {
   const [detail, setDetail] = useState<Item | null>(null);
   const [thread, setThread] = useState("");
@@ -998,6 +1013,7 @@ function AppContent({
           <Suspense fallback={<div className="catalog-loading">正在打开…</div>}>
             <Skin
               appId={app.id}
+              initialItemId={app.id === "instagram" ? initialItemId : undefined}
               owner={work.phone.owner}
               virtualTime={state.time}
               ui={state.ui?.[app.id]}
@@ -1313,3 +1329,4 @@ function AppContent({
 function UsersIcon() {
   return <PhoneIcon size={17} />;
 }
+

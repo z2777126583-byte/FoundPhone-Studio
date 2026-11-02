@@ -36,6 +36,7 @@ export type SkinProps = {
   ui?: Record<string, UiValue>;
   onUi?: (key: string, value: UiValue) => void;
   appId?: string;
+  initialItemId?: string;
   owner?: string;
   virtualTime?: string;
   name: string;
@@ -989,3 +990,4 @@ export function InstagramSkin(p: SkinProps) {
     </div>
   );
 }
+

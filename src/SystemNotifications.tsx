@@ -2,28 +2,44 @@ import { useState } from "react";
 import { motion } from "motion/react";
 import { X } from "lucide-react";
 import { AppArtwork } from "./AppArtwork";
-import type { Work } from "./schema";
-export function notificationContent(text: string, apps: Work["apps"]) {
+import type { Item, Work } from "./schema";
+export function notificationContent(
+  text: string,
+  apps: Work["apps"],
+  instagramItems: Item[] = [],
+) {
   const separator = text.search(/[:：]/);
   const sender = separator > 0 ? text.slice(0, separator) : "信息";
+  const body = separator > 0 ? text.slice(separator + 1) : text;
   const app = apps.find((a) => a.name === sender);
+  const newPost = app?.id === "instagram" && body.match(/^\s*(.+?) 发布了新动态：(.+)$/);
+  const itemId = newPost
+    ? instagramItems.find(
+        (item) =>
+          item.sender === newPost[1] &&
+          (item.title === newPost[2] || item.body === newPost[2]),
+      )?.id
+    : undefined;
   return {
     title: sender,
-    body: separator > 0 ? text.slice(separator + 1) : text,
+    body,
     appId: app?.id ?? "messages",
+    itemId,
   };
 }
 export function SystemNotifications({
   notices,
   apps,
+  instagramItems = [],
   onOpen,
   onDismiss,
   compact = false,
 }: {
   notices: string[];
   apps: Work["apps"];
-  onOpen: () => void;
+  onOpen: (appId: string, itemId?: string) => void;
   onDismiss: (index: number) => void;
+  instagramItems?: Item[];
   compact?: boolean;
 }) {
   const [expanded, setExpanded] = useState(false);
@@ -38,7 +54,7 @@ export function SystemNotifications({
     >
       <div className="notice-cards">
         {shown.map(({ text, index }) => {
-          const n = notificationContent(text, apps);
+          const n = notificationContent(text, apps, instagramItems);
           return (
             <motion.div
               layout
@@ -53,7 +69,7 @@ export function SystemNotifications({
                 if (info.offset.x < -80) onDismiss(index);
               }}
             >
-              <button className="notice-open" onClick={onOpen}>
+              <button className="notice-open" onClick={() => onOpen(n.appId, n.itemId)}>
                 <span className="notice-app-art">
                   <AppArtwork id={n.appId} />
                 </span>
@@ -87,3 +103,4 @@ export function SystemNotifications({
     </div>
   );
 }
+
