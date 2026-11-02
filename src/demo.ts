@@ -14,6 +14,7 @@ export function createWork(title = "雨停之前"): Work {
       owner: "林知夏",
       passcode: "",
       wallpaper: "sage",
+      wallpaperImage: "",
       theme: "light",
       time: "09:41",
       battery: 86,

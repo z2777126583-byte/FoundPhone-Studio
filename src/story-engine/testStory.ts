@@ -39,6 +39,17 @@ export function testStory(story: Story, work: Work) {
           errors.push(at + ": 选项不可达");
         state = choose(work, state, step.choose);
       }
+      if (step.ui) {
+        state.ui ??= {};
+        state.ui[step.ui.app] ??= {};
+        state.ui[step.ui.app][step.ui.key] = step.ui.value;
+        state = dispatch(
+          work,
+          state,
+          "variable",
+          `ui:${step.ui.app}:${step.ui.key}`,
+        );
+      }
       if (step.advanceMs !== undefined)
         state = advance(work, state, step.advanceMs);
       if (step.event) state = dispatch(work, state, step.event, step.target);

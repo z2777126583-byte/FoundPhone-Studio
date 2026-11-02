@@ -85,6 +85,18 @@ export const storySchema = z
             z.object({
               event: z.string().optional(),
               target: z.string().default(""),
+                ui: z
+                  .object({
+                    app: z.string(),
+                    key: z.string(),
+                    value: z.union([
+                      z.string(),
+                      z.number(),
+                      z.boolean(),
+                      z.array(z.string()),
+                    ]),
+                  })
+                  .optional(),
               advanceMs: z.number().min(0).optional(),
               choose: z.string().optional(),
               password: z.string().optional(),
@@ -111,6 +123,8 @@ export function compileStory(raw: unknown): { story: Story; work: Work } {
   const fail = (p: string, m: string): never => {
     throw new StoryIssue(p, m);
   };
+  if (s.phone.wallpaperImage && !safeMedia(s.phone.wallpaperImage))
+    fail("phone.wallpaperImage", "仅允许受支持的内嵌图片，不允许脚本或远程资源");
   const names = new Set<string>();
   const unique = (v: string, p: string) => {
     if (names.has(v)) fail(p, "重复 ID: " + v);
@@ -273,6 +287,7 @@ export function compileStory(raw: unknown): { story: Story; work: Work } {
     phone: {
       passcode: "",
       wallpaper: "sage",
+      wallpaperImage: "",
       theme: "light",
       time: "21:41",
       battery: 86,

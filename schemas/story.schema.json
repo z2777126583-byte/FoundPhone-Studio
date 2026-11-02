@@ -42,6 +42,10 @@
         "wallpaper": {
           "type": "string"
         },
+        "wallpaperImage": {
+          "default": "",
+          "type": "string"
+        },
         "theme": {
           "type": "string",
           "enum": [
@@ -611,6 +615,42 @@
                 "target": {
                   "default": "",
                   "type": "string"
+                },
+                "ui": {
+                  "type": "object",
+                  "properties": {
+                    "app": {
+                      "type": "string"
+                    },
+                    "key": {
+                      "type": "string"
+                    },
+                    "value": {
+                      "anyOf": [
+                        {
+                          "type": "string"
+                        },
+                        {
+                          "type": "number"
+                        },
+                        {
+                          "type": "boolean"
+                        },
+                        {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  "required": [
+                    "app",
+                    "key",
+                    "value"
+                  ],
+                  "additionalProperties": false
                 },
                 "advanceMs": {
                   "type": "number",
