@@ -118,25 +118,29 @@
           "id": "muze-chat-2",
           "senderId": "muzecheong",
           "body": "밥 먹었어?",
-          "time": "2026-11-05 11:13"
+          "time": "2026-11-05 11:13",
+          "hidden": true
         },
         {
           "id": "muze-chat-3",
           "senderId": "muzecheong",
           "body": "나랑 같이 밥 먹을래? 🥺",
-          "time": "2026-11-05 11:39"
+          "time": "2026-11-05 11:39",
+          "hidden": true
         },
         {
           "id": "muze-chat-4",
           "senderId": "owner",
           "body": "싫어.",
-          "time": "2026-11-05 11:43"
+          "time": "2026-11-05 11:43",
+          "hidden": true
         },
         {
           "id": "muze-chat-5",
           "senderId": "muzecheong",
           "body": "왜에~?😢",
-          "time": "2026-11-05 11:51"
+          "time": "2026-11-05 11:51",
+          "hidden": true
         }
       ]
     }
@@ -598,6 +602,76 @@
   "variables": {},
   "events": [
     {
+      "id": "reveal-muze-chat-2",
+      "label": "点开第1条后显示下一条",
+      "type": "event",
+      "event": "read",
+      "target": "muze-chat-1",
+      "actions": [
+        {
+          "type": "unlock",
+          "key": "muze-chat-2",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": "reveal-muze-chat-3",
+      "label": "点开第2条后显示下一条",
+      "type": "event",
+      "event": "read",
+      "target": "muze-chat-2",
+      "actions": [
+        {
+          "type": "unlock",
+          "key": "muze-chat-3",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": "reveal-muze-chat-4",
+      "label": "点开第3条后显示下一条",
+      "type": "event",
+      "event": "read",
+      "target": "muze-chat-3",
+      "actions": [
+        {
+          "type": "unlock",
+          "key": "muze-chat-4",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": "reveal-muze-chat-5",
+      "label": "点开第4条后显示下一条",
+      "type": "event",
+      "event": "read",
+      "target": "muze-chat-4",
+      "actions": [
+        {
+          "type": "unlock",
+          "key": "muze-chat-5",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": "muze-chat-finished-instagram-notice",
+      "label": "聊天结束后收到 Instagram 推送",
+      "type": "event",
+      "event": "read",
+      "target": "muze-chat-5",
+      "actions": [
+        {
+          "type": "notification",
+          "key": "",
+          "value": "Instagram: Muhahaha 发布了新动态：ㅠㅠ"
+        }
+      ]
+    },
+    {
       "id": "liked-muze-post-call",
       "label": "点赞后收到来电",
       "type": "event",
@@ -652,6 +726,26 @@
       "name": "点赞后拒接来电",
       "steps": [
         {
+          "event": "read",
+          "target": "muze-chat-1"
+        },
+        {
+          "event": "read",
+          "target": "muze-chat-2"
+        },
+        {
+          "event": "read",
+          "target": "muze-chat-3"
+        },
+        {
+          "event": "read",
+          "target": "muze-chat-4"
+        },
+        {
+          "event": "read",
+          "target": "muze-chat-5"
+        },
+        {
           "ui": {
             "app": "instagram",
             "key": "mymyLiked",
@@ -665,11 +759,40 @@
           "target": "muze-call"
         }
       ],
-      "ending": "拒接来电"
+      "ending": "拒接来电",
+      "expectUnlocked": [
+        "muze-chat-2",
+        "muze-chat-3",
+        "muze-chat-4",
+        "muze-chat-5"
+      ],
+      "expectNotifications": [
+        "Instagram: Muhahaha 发布了新动态：ㅠㅠ"
+      ]
     },
     {
       "name": "点赞后接听来电",
       "steps": [
+        {
+          "event": "read",
+          "target": "muze-chat-1"
+        },
+        {
+          "event": "read",
+          "target": "muze-chat-2"
+        },
+        {
+          "event": "read",
+          "target": "muze-chat-3"
+        },
+        {
+          "event": "read",
+          "target": "muze-chat-4"
+        },
+        {
+          "event": "read",
+          "target": "muze-chat-5"
+        },
         {
           "ui": {
             "app": "instagram",
@@ -684,7 +807,16 @@
           "target": "muze-call"
         }
       ],
-      "ending": "接听来电"
+      "ending": "接听来电",
+      "expectUnlocked": [
+        "muze-chat-2",
+        "muze-chat-3",
+        "muze-chat-4",
+        "muze-chat-5"
+      ],
+      "expectNotifications": [
+        "Instagram: Muhahaha 发布了新动态：ㅠㅠ"
+      ]
     }
   ]
 }

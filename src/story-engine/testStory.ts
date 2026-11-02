@@ -59,6 +59,9 @@ export function testStory(story: Story, work: Work) {
     else reached.add(t.ending);
     for (const id of t.expectUnlocked)
       if (!state.unlocked.includes(id)) errors.push(t.name + ": 未解锁 " + id);
+    for (const notice of t.expectNotifications)
+      if (!state.notifications.includes(notice))
+        errors.push(t.name + ": 未收到通知 " + notice);
   }
   for (const n of work.nodes.filter((n) => n.type === "ending")) {
     const ending = String(
@@ -74,3 +77,4 @@ export function testStory(story: Story, work: Work) {
   }
   return errors;
 }
+

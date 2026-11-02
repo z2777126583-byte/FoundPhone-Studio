@@ -104,6 +104,7 @@ export const storySchema = z
           ),
           ending: z.string(),
           expectUnlocked: z.array(z.string()).default([]),
+          expectNotifications: z.array(z.string()).default([]),
         }),
       )
       .default([]),
@@ -327,3 +328,4 @@ export function compileStory(raw: unknown): { story: Story; work: Work } {
   });
   return { story: s, work };
 }
+

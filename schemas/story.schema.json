@@ -678,13 +678,21 @@
             "items": {
               "type": "string"
             }
+          },
+          "expectNotifications": {
+            "default": [],
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           }
         },
         "required": [
           "name",
           "steps",
           "ending",
-          "expectUnlocked"
+          "expectUnlocked",
+          "expectNotifications"
         ],
         "additionalProperties": false
       }
@@ -707,3 +715,4 @@
   ],
   "additionalProperties": false
 }
+
