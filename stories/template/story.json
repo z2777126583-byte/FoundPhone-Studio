@@ -3,7 +3,7 @@
   "id": "muze-kakao-ig-call",
   "title": "무즈청的未接来电",
   "description": "从 KakaoTalk 聊天到 Instagram 点赞后触发的模拟来电。",
-  "revision": 4,
+  "revision": 5,
   "phone": {
     "owner": "我",
     "date": "2026-11-05",
@@ -639,11 +639,6 @@
           "type": "unlock",
           "key": "muze-chat-3",
           "value": true
-        },
-        {
-          "type": "notification",
-          "key": "",
-          "value": "KakaoTalk: 무즈청🧡💖: 밥 먹었어?"
         }
       ]
     },
@@ -658,11 +653,6 @@
           "type": "unlock",
           "key": "muze-chat-4",
           "value": true
-        },
-        {
-          "type": "notification",
-          "key": "",
-          "value": "KakaoTalk: 무즈청🧡💖: 나랑 같이 밥 먹을래? 🥺"
         }
       ]
     },
@@ -677,11 +667,6 @@
           "type": "unlock",
           "key": "muze-chat-5",
           "value": true
-        },
-        {
-          "type": "notification",
-          "key": "",
-          "value": "KakaoTalk: 무즈청🧡💖: 왜에~?😢"
         }
       ]
     },
@@ -702,7 +687,7 @@
     {
       "id": "liked-muze-post-call",
       "label": "点赞后收到来电",
-      "type": "event",
+      "type": "delay",
       "event": "variable",
       "target": "ui:instagram:mymyLiked",
       "conditions": [
@@ -718,7 +703,8 @@
           "key": "muze-call",
           "value": "무즈청🧡💖"
         }
-      ]
+      ],
+      "delayMs": 3000
     },
     {
       "id": "muze-call-declined",
@@ -796,9 +782,6 @@
       ],
       "expectNotifications": [
         "KakaoTalk: 무즈청🧡💖: 뭐 해?",
-        "KakaoTalk: 무즈청🧡💖: 밥 먹었어?",
-        "KakaoTalk: 무즈청🧡💖: 나랑 같이 밥 먹을래? 🥺",
-        "KakaoTalk: 무즈청🧡💖: 왜에~?😢",
         "Instagram: Muhahaha 发布了新动态：ㅠㅠ"
       ]
     },
@@ -848,9 +831,6 @@
       ],
       "expectNotifications": [
         "KakaoTalk: 무즈청🧡💖: 뭐 해?",
-        "KakaoTalk: 무즈청🧡💖: 밥 먹었어?",
-        "KakaoTalk: 무즈청🧡💖: 나랑 같이 밥 먹을래? 🥺",
-        "KakaoTalk: 무즈청🧡💖: 왜에~?😢",
         "Instagram: Muhahaha 发布了新动态：ㅠㅠ"
       ]
     }
