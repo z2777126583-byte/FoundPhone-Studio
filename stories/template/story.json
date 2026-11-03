@@ -602,6 +602,19 @@
   "variables": {},
   "events": [
     {
+      "id": "muze-first-kakao-push",
+      "label": "锁屏收到第一条 KakaoTalk 消息",
+      "type": "event",
+      "event": "start",
+      "actions": [
+        {
+          "type": "notification",
+          "key": "",
+          "value": "KakaoTalk: 무즈청🧡💖: 뭐 해?"
+        }
+      ]
+    },
+    {
       "id": "reveal-muze-chat-2",
       "label": "点开第1条后显示下一条",
       "type": "event",
@@ -626,6 +639,11 @@
           "type": "unlock",
           "key": "muze-chat-3",
           "value": true
+        },
+        {
+          "type": "notification",
+          "key": "",
+          "value": "KakaoTalk: 무즈청🧡💖: 밥 먹었어?"
         }
       ]
     },
@@ -640,6 +658,11 @@
           "type": "unlock",
           "key": "muze-chat-4",
           "value": true
+        },
+        {
+          "type": "notification",
+          "key": "",
+          "value": "KakaoTalk: 무즈청🧡💖: 나랑 같이 밥 먹을래? 🥺"
         }
       ]
     },
@@ -654,6 +677,11 @@
           "type": "unlock",
           "key": "muze-chat-5",
           "value": true
+        },
+        {
+          "type": "notification",
+          "key": "",
+          "value": "KakaoTalk: 무즈청🧡💖: 왜에~?😢"
         }
       ]
     },
@@ -767,6 +795,10 @@
         "muze-chat-5"
       ],
       "expectNotifications": [
+        "KakaoTalk: 무즈청🧡💖: 뭐 해?",
+        "KakaoTalk: 무즈청🧡💖: 밥 먹었어?",
+        "KakaoTalk: 무즈청🧡💖: 나랑 같이 밥 먹을래? 🥺",
+        "KakaoTalk: 무즈청🧡💖: 왜에~?😢",
         "Instagram: Muhahaha 发布了新动态：ㅠㅠ"
       ]
     },
@@ -815,6 +847,10 @@
         "muze-chat-5"
       ],
       "expectNotifications": [
+        "KakaoTalk: 무즈청🧡💖: 뭐 해?",
+        "KakaoTalk: 무즈청🧡💖: 밥 먹었어?",
+        "KakaoTalk: 무즈청🧡💖: 나랑 같이 밥 먹을래? 🥺",
+        "KakaoTalk: 무즈청🧡💖: 왜에~?😢",
         "Instagram: Muhahaha 发布了新动态：ㅠㅠ"
       ]
     }
