@@ -3,7 +3,7 @@
   "id": "muze-kakao-ig-call",
   "title": "무즈청的未接来电",
   "description": "从 KakaoTalk 聊天到 Instagram 点赞后触发的模拟来电。",
-  "revision": 3,
+  "revision": 4,
   "phone": {
     "owner": "我",
     "date": "2026-11-05",
